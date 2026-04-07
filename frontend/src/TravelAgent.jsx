@@ -179,7 +179,7 @@ export default function TravelAgent() {
 
       if (data.flights && data.flights.length > 0) {
         setFlights(data.flights);
-        setStatus("age");
+        setStatus("flights");
         return;
       }
 
