@@ -7,7 +7,7 @@ import {
   loginWithEmail,
 } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-const API_BASE = "http://127.0.0.1:8001";
+const API_BASE = "http://skyagent-production.up.railway.app";
 
 const PlaneIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
