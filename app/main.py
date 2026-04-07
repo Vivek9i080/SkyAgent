@@ -42,11 +42,7 @@ last_flights=[]
 last_search={}
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",           # local dev
-        "https://sky-agent-gshb.vercel.app",     
-        "https://*.vercel.app",            
-    ],
+    allow_origins=["https://sky-agent-gshb.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
