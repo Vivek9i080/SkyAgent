@@ -27,11 +27,12 @@ def get_airport_code(city, token):
         "Authorization": f"Bearer {token}"
     }
 
-    params = {
-        "keyword": city,
-        "subType": "CITY",
-        "page[limit]": 1
-    }
+    for sub_type in ["AIRPORT", "CITY"]:
+        params = {
+            "keyword": city,
+            "subType": sub_type,
+            "page[limit]": 1
+        }
 
     response = requests.get(url, headers=headers, params=params)
 

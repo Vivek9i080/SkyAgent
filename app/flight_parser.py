@@ -11,6 +11,10 @@ def search_flights(origin, destination, date):
     destination_code = get_airport_code(destination, token)
 
     print("Converted:", origin_code, destination_code)
+    
+    if not origin_code or not destination_code:
+        print(f"Airport code resolution failed: {origin} → {origin_code}, {destination} → {destination_code}")
+        return []
 
     url = "https://test.api.amadeus.com/v2/shopping/flight-offers"
 
