@@ -15,7 +15,7 @@ def get_amadeus_token():
     }
     
     response = requests.post(url, data=data, headers=headers)
-    
+    print("Amadeus token response:", response.json())
     return response.json().get("access_token")
 
 

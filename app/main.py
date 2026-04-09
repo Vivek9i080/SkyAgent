@@ -1,33 +1,3 @@
-# from fastapi import FastAPI
-# from app.ai_parser import parse_travel_response
-# from app.agent import run_agent
-# from dotenv import load_dotenv
-# load_dotenv()
-# from fastapi.middleware.cors import CORSMiddleware
-
-# app = FastAPI()
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  # for development
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-
-# @app.post("/ai-book-flight")
-# def ai_book_flight(request: str):
-#     parsed = parse_travel_response(request)
-#     result = run_agent(
-#         parsed["origin"],
-#         parsed["destination"],
-#         parsed["date"],
-#         parsed["passenger"]
-#     )
-#     return result
-
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 from app.ai_parser import parse_travel_response
