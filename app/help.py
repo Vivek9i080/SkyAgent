@@ -34,12 +34,12 @@ def get_airport_code(city, token):
             "page[limit]": 1
         }
 
-    response = requests.get(url, headers=headers, params=params)
+        response = requests.get(url, headers=headers, params=params)
 
-    data = response.json()
+        data = response.json()
 
-    if "data" in data and len(data["data"]) > 0:
-        return data["data"][0]["iataCode"]
+        if "data" in data and len(data["data"]) > 0:
+            return data["data"][0]["iataCode"]
 
     return None
 
