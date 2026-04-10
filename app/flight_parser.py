@@ -1,4 +1,4 @@
-from app.help import convert_usd_to_inr, get_amadeus_token, get_airport_code
+from app.help import convert_usd_to_inr, get_airport_code
 import requests
 import os
 from datetime import datetime
