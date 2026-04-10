@@ -55,10 +55,10 @@ RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 #         return data["data"][0]["iataCode"]
 
 #     return None
-HEADERS = {
-    "X-RapidAPI-Key": RAPIDAPI_KEY,
-    "X-RapidAPI-Host": "sky-scrapper.p.rapidapi.com"
-}
+# HEADERS = {
+#     "X-RapidAPI-Key": RAPIDAPI_KEY,
+#     "X-RapidAPI-Host": "sky-scrapper.p.rapidapi.com"
+# }
 
 # def get_airport_code(city, token):
 #     city_lower = city.lower().strip()
@@ -109,46 +109,51 @@ HEADERS = {
 #     print(f"[SELECTED FIRST RESULT] → {data['data'][0]['iataCode']}")
 #     return data["data"][0]["iataCode"]
 
+AVIATIONSTACK_KEY = os.getenv("AVIATIONSTACK_KEY")
+
 airport_cache = {}
 
-def get_airport_code(city, token=None):
+def get_airport_code(city):
     city_lower = city.lower()
 
-    # Return from cache if already resolved
+    # ✅ Cache
     if city_lower in airport_cache:
         print(f"[CACHE] {city} → {airport_cache[city_lower]}")
         return airport_cache[city_lower]
 
     try:
         response = requests.get(
-            "https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchAirport",
-            headers=HEADERS,
-            params={"query": city, "locale": "en-US"},
+            "http://api.aviationstack.com/v1/airports",
+            params={
+                "access_key": AVIATIONSTACK_KEY,
+                "search": city
+            },
             timeout=10
         )
+
         data = response.json()
-        print(f"Airport search for '{city}':", data)
+        print(f"[AVIATIONSTACK] Search '{city}':", data)
 
-        places = data.get("data", [])
-        if places:
-            # Prefer AIRPORT type over CITY type
-            for place in places:
-                if place["navigation"]["entityType"] == "AIRPORT":
-                    code = place["skyId"]
-                    entity_id = place["entityId"]
-                    airport_cache[city_lower] = {"skyId": code, "entityId": entity_id}
-                    print(f"[RAPIDAPI] Resolved '{city}' → {code}")
-                    return {"skyId": code, "entityId": entity_id}
+        airports = data.get("data", [])
 
-            # fallback to first result if no airport found
-            code = places[0]["skyId"]
-            entity_id = places[0]["entityId"]
-            airport_cache[city_lower] = {"skyId": code, "entityId": entity_id}
-            return {"skyId": code, "entityId": entity_id}
+        if not airports:
+            return None
+
+        # ✅ Prefer large airports / international
+        for airport in airports:
+            if airport.get("iata_code"):
+                code = airport["iata_code"]
+                airport_cache[city_lower] = code
+                print(f"[AVIATIONSTACK] Resolved '{city}' → {code}")
+                return code
+
+        # fallback
+        code = airports[0].get("iata_code")
+        airport_cache[city_lower] = code
+        return code
 
     except Exception as e:
-        
-        print(f"RapidAPI airport search error for '{city}': {e}")
+        print(f"Aviationstack error for '{city}': {e}")
 
     return None
 
