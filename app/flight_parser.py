@@ -31,10 +31,10 @@ def search_flights(origin, destination, date):
                 "X-RapidAPI-Host": "sky-scrapper.p.rapidapi.com"
             },
             params={
-                "originSkyId": origin_code,
-                "destinationSkyId": destination_code,
-                "originEntityId": origin_code,
-                "destinationEntityId": destination_code,
+                "originSkyId": origin_code["skyId"],
+                "destinationSkyId": destination_code["skyId"],
+                "originEntityId": origin_code["entityId"],
+                "destinationEntityId": destination_code["entityId"],
                 "date": date,
                 "adults": "1",
                 "currency": "USD",

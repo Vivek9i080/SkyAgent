@@ -130,16 +130,26 @@ def get_airport_code(city, token=None):
         print(f"Airport search for '{city}':", data)
 
         places = data.get("data", [])
-        if places and len(places) > 0:
+        if places:
+            # Prefer AIRPORT type over CITY type
+            for place in places:
+                if place["navigation"]["entityType"] == "AIRPORT":
+                    code = place["skyId"]
+                    entity_id = place["entityId"]
+                    airport_cache[city_lower] = {"skyId": code, "entityId": entity_id}
+                    print(f"[RAPIDAPI] Resolved '{city}' → {code}")
+                    return {"skyId": code, "entityId": entity_id}
+
+            # fallback to first result if no airport found
             code = places[0]["skyId"]
-            airport_cache[city_lower] = code
-            print(f"[RAPIDAPI] Resolved '{city}' → {code}")
-            return code
+            entity_id = places[0]["entityId"]
+            airport_cache[city_lower] = {"skyId": code, "entityId": entity_id}
+            return {"skyId": code, "entityId": entity_id}
 
     except Exception as e:
+        
         print(f"RapidAPI airport search error for '{city}': {e}")
 
-    print(f"Could not resolve airport code for: '{city}'")
     return None
 
 
