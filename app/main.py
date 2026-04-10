@@ -52,7 +52,7 @@ def ai_book_flight(data: FlightRequest):
         )
         if not flights:
             return {"message": "No flights available"}
-        flights=sorted(flights,key=lambda x:x["price"])
+        flights=sorted(flights,key=lambda x:x["price"],reverse=True)
     
         last_flights=flights
         last_search = parsed
