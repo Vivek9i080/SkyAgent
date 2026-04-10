@@ -25,10 +25,10 @@ def search_flights(origin, destination, date):
         
         response = requests.get(
             
-            "https://sky-scrapper3.p.rapidapi.com/api/v2/flights/searchFlights",
+            "https://sky-scrapper.p.rapidapi.com/api/v2/flights/searchFlights",
             headers={
                 "X-RapidAPI-Key": RAPIDAPI_KEY,
-                "X-RapidAPI-Host": "sky-scrapper3.p.rapidapi.com"
+                "X-RapidAPI-Host": "sky-scrapper.p.rapidapi.com"
             },
             params={
                 "originSkyId": origin_code,

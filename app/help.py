@@ -57,7 +57,7 @@ RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 #     return None
 HEADERS = {
     "X-RapidAPI-Key": RAPIDAPI_KEY,
-    "X-RapidAPI-Host": "sky-scrapper3.p.rapidapi.com"
+    "X-RapidAPI-Host": "sky-scrapper.p.rapidapi.com"
 }
 
 # def get_airport_code(city, token):
@@ -121,7 +121,7 @@ def get_airport_code(city, token=None):
 
     try:
         response = requests.get(
-            "https://sky-scrapper3.p.rapidapi.com/api/v1/flights/searchAirport",
+            "https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchAirport",
             headers=HEADERS,
             params={"query": city, "locale": "en-US"},
             timeout=10
