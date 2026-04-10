@@ -27,20 +27,20 @@ def get_airport_code(city, token):
         "Authorization": f"Bearer {token}"
     }
 
-    for sub_type in ["AIRPORT", "CITY"]:
-        params = {
-            "keyword": city,
-            "subType": sub_type,
-            "page[limit]": 1
-        }
+    params = {
+        "keyword": city,
+        "subType": "CITY,AIRPORT",   # 🔥 FIX
+        "page[limit]": 3
+    }
 
-        response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url, headers=headers, params=params)
 
-        data = response.json()
-        print(f"[{sub_type}] '{city}':", data)
+    data = response.json()
+    
+    print(f"[COMBINED] '{city}':", data)
 
-        if "data" in data and len(data["data"]) > 0:
-            return data["data"][0]["iataCode"]
+    if "data" in data and len(data["data"]) > 0:
+        return data["data"][0]["iataCode"]
 
     return None
 
